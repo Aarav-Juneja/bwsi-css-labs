@@ -10,7 +10,7 @@ and prints the result to the terminal window.
 """
 
 
-def simple_calculator(num1: float, num2: float) -> tuple[str, float]:
+def simple_calculator(operation: str, num1: float, num2: float) -> float:
     """
     Function that takes in two numbers and an operation (add, subtract, multiply, divide),
     then performs the operation on the two numbers and returns the result.
@@ -24,27 +24,21 @@ def simple_calculator(num1: float, num2: float) -> tuple[str, float]:
         float: The result of the operation.
     """
 
-    while True:
-        operation = (
-            input("Enter the operation (add, subtract, multiply, divide): ")
-            .strip()
-            .lower()
-        )
-        if operation == "add":
-            return operation, num1 + num2
-        elif operation == "subtract":
-            return operation, num1 - num2
-        elif operation == "multiply":
-            return operation, num1 * num2
-        elif operation == "divide":
-            if num2 != 0:
-                return operation, num1 / num2
-            else:
-                raise ValueError("Cannot divide by zero.")
+    if operation == "add":
+        return num1 + num2
+    elif operation == "subtract":
+        return num1 - num2
+    elif operation == "multiply":
+        return num1 * num2
+    elif operation == "divide":
+        if num2 != 0:
+            return num1 / num2
         else:
-            print(
-                "Invalid operation. Please choose from 'add', 'subtract', 'multiply', or 'divide'."
-            )
+            raise ValueError("Cannot divide by zero.")
+    else:
+        raise ValueError(
+            "Invalid operation. Please choose from 'add', 'subtract', 'multiply', or 'divide'."
+        )
 
 
 def main():
@@ -60,8 +54,20 @@ def main():
         except ValueError:
             print("Invalid input. Please enter numeric values. Reenter BOTH numbers")
 
+    op = ""
+    while op not in ["add", "subtract", "multiply", "divide"]:
+        op = (
+            input("Enter the operation (add, subtract, multiply, divide): ")
+            .strip()
+            .lower()
+        )
+        if op not in ["add", "subtract", "multiply", "divide"]:
+            print(
+                "Invalid operation. Please choose from 'add', 'subtract', 'multiply', or 'divide'."
+            )
+
     # Perform the calculation and display the result
-    op, result = simple_calculator(num1, num2)
+    result = simple_calculator(op, num1, num2)
     print(f"The result of {op}ing {num1} and {num2} is: {result}")
 
 
